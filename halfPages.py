@@ -35,6 +35,11 @@ def _num_suffix(num):
         return "rd"
     return "th"
 
+def paper_width(depth):
+    return "8.5" if depth % 2 == 0 else "5.5in" 
+
+def paper_height(depth):
+    return "11in" if depth % 2 == 0 else "8.5in" 
 
 def print_title(output, title, subtitle, ownerName, phoneNumber, address1, address2, city, state, country, zipCode):
     output.write("\\begin{tikzpicture}[\n"

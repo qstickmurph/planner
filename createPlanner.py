@@ -7,7 +7,6 @@ import os
 import halfPages
 import quarterPages
 
-
 # Ask user for parameters
 while True:                                                                                                                                                                                            
     startDate = input("Start Date (YYYY-MM-DD): ")
@@ -35,21 +34,11 @@ while True:
 while True:
     pagesPerSheet  = int(input("Would you like a (2) half-sized or (4) quarter-sized booklet? "))
     if pagesPerSheet == 2: #half sized booklet
-        print_year = halfPages.print_year
-        print_quarter = halfPages.print_quarter
-        print_month= halfPages.print_month
-        print_week= halfPages.print_week
-        print_day= halfPages.print_day
-        print_title = halfPages.print_title
+        pageClass = halfPages
         break
 
     elif pagesPerSheet == 4: # quarter sized bookley
-        print_year = quarterPages.print_year
-        print_quarter = quarterPages.print_quarter
-        print_month= quarterPages.print_month
-        print_week= quarterPages.print_week
-        print_day= quarterPages.print_day
-        print_title = quarterPages.print_title
+        pageClass = quarterPages
         break
         
     else:
@@ -95,7 +84,7 @@ output.write("\\usepackage{lmodern}\n"
 output.write("\\begin{document}\n")
 
 # Print Title Page
-print_title(output, title, subtitle, ownerName, phoneNumber, address1, address2, city, state, country, zipCode)
+pageClass.print_title(output, title, subtitle, ownerName, phoneNumber, address1, address2, city, state, country, zipCode)
 
 # Change startDate and endDate to fit into time chunks desired
 if printYearly: 
@@ -124,15 +113,15 @@ while(startDate <= endDate):
     
     # Print them
     if printYearly and y:
-        print_year(output, startDate + timedelta(days=6))
+        pageClass.print_year(output, startDate + timedelta(days=6))
     if printQuarterly and q:
-        print_quarter(output, startDate + timedelta(days=6))
+        pageClass.print_quarter(output, startDate + timedelta(days=6))
     if printMonthly and m:
-        print_month(output, startDate + timedelta(days=6))
+        pageClass.print_month(output, startDate + timedelta(days=6))
     if printWeekly and w:
-        print_week(output, startDate)
+        pageClass.print_week(output, startDate)
     if printDaily and d:
-        print_day(output, startDate)
+        pageClass.print_day(output, startDate)
 
     startDate += timedelta(days=1)
 
@@ -142,7 +131,7 @@ print("Closing output_planner.tex")
 output.close()
 
 # Create first pdf from vanilla tex
-print("Creating pdf of output_planner.tex")
+print("Creating output_planner.pdf")
 subprocess.run(['pdflatex', 'output_planner.tex'],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.STDOUT)
@@ -152,20 +141,21 @@ while 2 ** (depth) < pagesPerSheet:
     print(f"Creating signatures{depth}.tex")
     signatures = open(f'signatures{depth}.tex', 'w+')
     signatures.write("\\documentclass{article}\n"
-            + "\\usepackage[letterpaper]{geometry}\n"
+            + f"\\usepackage[paperheight={pageClass.paper_height(depth)}, paperwidth={pageClass.paper_width(depth)}]{{geometry}}\n"
             + "\\usepackage{pdfpages}\n\n"
             + "\\begin{document}\n")
     if depth == 0:
-        signatures.write("\t\\includepdf[pages={{},{},-,{},{},{}}," + f" signature={str(signatureSize) * pagesPerSheet},landscape]{{output_planner.pdf}}\n")
+        signatures.write("\t\\includepdf[pages={{},{},-,{},{},{}}," + f" signature={str(signatureSize * pagesPerSheet)},landscape]{{output_planner.pdf}}\n")
     else:
-        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth) )},landscape]{{signatures{depth-1}.pdf}}\n")
+        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{signatures{depth-1}.pdf}}\n")
     signatures.write("\\end{document}")
     signatures.close()
-
+    
+    print(f"Creating signatures{depth},pdf")
     subprocess.run(['pdflatex', f'signatures{depth}.tex'],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.STDOUT)
 
     depth += 1
 
-print(f"Output written on signatures{depth-1}.pdf")
+print(f"Final output written on signatures{depth-1}.pdf")

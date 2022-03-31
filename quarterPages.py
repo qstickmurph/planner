@@ -82,20 +82,12 @@ def print_title(output, title, subtitle, ownerName, phoneNumber, address1, addre
             + "\n"
             + "\\end{tikzpicture}\n"
             + "\\begin{tikzpicture}[\n"
-            + "\tinner sep=3 pt,\n"
-            + "\ttitle/.style={%\n"
-            + "\t\tnode font=\\Large,\n"
-            + "\t},\n"
             + "\tyscale = -1]\n"
             + "\t% Framing Nodes\n"
             + "\t\\node at (0,0) {};\n"
             + "\t\\node at (8.5, 11) {};\n"
             + "\\end{tikzpicture}\n"
             + "\\begin{tikzpicture}[\n"
-            + "\tinner sep=3 pt,\n"
-            + "\ttitle/.style={%\n"
-            + "\t\tnode font=\\Large,\n"
-            + "\t},\n"
             + "\tyscale = -1]\n"
             + "\t% Framing Nodes\n"
             + "\t\\node at (0,0) {};\n"
@@ -110,7 +102,18 @@ def print_quarter(output, currDate):
     pass
 
 def print_month(output, currDate):
-    pass
+    output.write("\\begin{tikzpicture}[\n"
+            + "\tyscale = -1]\n"
+            + "\t% Framing Nodes\n"
+            + "\t\\node at (0,0) {};\n"
+            + "\t\\node at (8.5,11) {};\n"
+            + "\\end{tikzpicture}\n"
+            + "\\begin{tikzpicture}[\n"
+            + "\tyscale = -1]\n"
+            + "\t% Framing Nodes\n"
+            + "\t\\node at (0,0) {};\n"
+            + "\t\\node at (8.5,11) {};\n"
+            + "\\end{tikzpicture}\n")
 
 def print_week(output, currDate):
     output.write("\\begin{tikzpicture}[\n"

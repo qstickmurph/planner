@@ -145,13 +145,13 @@ while 2 ** (depth) < pagesPerSheet:
             + "\\usepackage{pdfpages}\n\n"
             + "\\begin{document}\n")
     if depth == 0:
-        signatures.write("\t\\includepdf[pages={{},{},-,{},{},{}}," + f" signature={str(signatureSize * pagesPerSheet)},landscape]{{output_planner.pdf}}\n")
+        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{output_planner.pdf}}\n")
     else:
         signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{signatures{depth-1}.pdf}}\n")
     signatures.write("\\end{document}")
     signatures.close()
     
-    print(f"Creating signatures{depth},pdf")
+    print(f"Creating signatures{depth}.pdf")
     subprocess.run(['pdflatex', f'signatures{depth}.tex'],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.STDOUT)

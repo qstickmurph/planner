@@ -32,12 +32,12 @@ while True:
             break
 
 while True:
-    pagesPerSheet  = int(input("Would you like a (2) half-sized or (4) quarter-sized booklet? "))
-    if pagesPerSheet == 2: #half sized booklet
+    pagesPerSheet  = int(input("Would you like a (4) half-sized or (8) quarter-sized booklet? "))
+    if pagesPerSheet == 4: #half sized booklet
         pageClass = halfPages
         break
 
-    elif pagesPerSheet == 4: # quarter sized bookley
+    elif pagesPerSheet == 8: # quarter sized bookley
         pageClass = quarterPages
         break
         
@@ -46,12 +46,21 @@ while True:
 
 while True:
     try:
-        signatureSize = int(input(f"How many sheets per signature? "))
+        signatureSize = 2*int(input(f"How many pages per signature? "))
     except TypeError:
         print("Invalid response")
     else:
         break
 
+while True:
+    try:
+        minEndpages = int(input(f"How many end pages would you like? (minimum) "))
+    except TypeError:
+        print("Invalid response")
+    else:
+        break
+
+blankFront = input("Include a blank front page? (y/n): ") == "y"
 printYearly = input("Print yearly pages? (y/n): ") == "y"
 printQuarterly = input("Print quarterly pages? (y/n): ") == "y"
 printMonthly = input("Print monthly pages? (y/n): ") == "y"
@@ -70,7 +79,7 @@ zipCode = input("What's their postal code? ")
 
 print("Creating / writing to output_planner.tex")
 # Write output_planner.tex file
-output = open("output_planner.tex", "w+")
+output = open("tex/output_planner.tex", "w+")
 
 # Document Class
 output.write("\\documentclass[tikz]{standalone}\n\n")
@@ -82,6 +91,10 @@ output.write("\\usepackage{lmodern}\n"
 
 # Begin Document
 output.write("\\begin{document}\n")
+
+## Print Blank Pages
+pageClass.print_blank(output)
+pageClass.print_blank(output)
 
 # Print Title Page
 pageClass.print_title(output, title, subtitle, ownerName, phoneNumber, address1, address2, city, state, country, zipCode)
@@ -125,6 +138,9 @@ while(startDate <= endDate):
 
     startDate += timedelta(days=1)
 
+# Set numEndsheets to the correct ammount
+pageClass.print_endpages(output, minEndpages, signatureSize * pagesPerSheet)
+
 # Finish the document and close the file
 output.write("\\end{document}\n")
 print("Closing output_planner.tex")
@@ -132,27 +148,27 @@ output.close()
 
 # Create first pdf from vanilla tex
 print("Creating output_planner.pdf")
-subprocess.run(['pdflatex', 'output_planner.tex'],
+subprocess.run(['pdflatex', '-output-directory=output', 'tex/output_planner.tex'],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.STDOUT)
 
-depth = 0
+depth = 1
 while 2 ** (depth) < pagesPerSheet:
     print(f"Creating signatures{depth}.tex")
-    signatures = open(f'signatures{depth}.tex', 'w+')
+    signatures = open(f'tex/signatures{depth}.tex', 'w+')
     signatures.write("\\documentclass{article}\n"
             + f"\\usepackage[paperheight={pageClass.paper_height(depth)}, paperwidth={pageClass.paper_width(depth)}]{{geometry}}\n"
             + "\\usepackage{pdfpages}\n\n"
             + "\\begin{document}\n")
-    if depth == 0:
-        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{output_planner.pdf}}\n")
+    if depth == 1:
+        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{output/output_planner.pdf}}\n")
     else:
-        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{signatures{depth-1}.pdf}}\n")
+        signatures.write(f"\t\\includepdf[pages=-, signature={str(signatureSize * pagesPerSheet // 2**(depth))},landscape]{{output/signatures{depth-1}.pdf}}\n")
     signatures.write("\\end{document}")
     signatures.close()
     
     print(f"Creating signatures{depth}.pdf")
-    subprocess.run(['pdflatex', f'signatures{depth}.tex'],
+    subprocess.run(['pdflatex', '-output-directory=output', f'tex/signatures{depth}.tex'],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.STDOUT)
 

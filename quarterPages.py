@@ -1,5 +1,7 @@
 from datetime import date, timedelta
 
+numPages = 0
+
 _weekdayDict = {
         0 : "Monday",
         1 : "Tuesday",
@@ -41,7 +43,18 @@ def paper_width(depth):
 def paper_height(depth):
     return "8.5in" if depth % 2 == 0 else "11.5in" 
 
+def print_blank(output):
+    global numPages
+    numPages += 1
+    output.write("\\begin{tikzpicture}\n"
+            + "\t% Framing Nodes\n"
+            + "\t\\node at (0,0) {};\n"
+            + "\t\\node at (8.5, 11) {};\n"
+            + "\\end{tikzpicture}\n")
+
 def print_title(output, title, subtitle, ownerName, phoneNumber, address1, address2, city, state, country, zipCode):
+    global numPages
+    numPages += 3
     output.write("\\begin{tikzpicture}[\n"
             + "\tinner sep=3 pt,\n"
             + "\ttitle/.style={%\n"
@@ -102,6 +115,8 @@ def print_quarter(output, currDate):
     pass
 
 def print_month(output, currDate):
+    global numPages
+    numPages += 4
     output.write("\\begin{tikzpicture}[\n"
             + "\tyscale = -1]\n"
             + "\t% Framing Nodes\n"
@@ -116,6 +131,8 @@ def print_month(output, currDate):
             + "\\end{tikzpicture}\n")
 
 def print_week(output, currDate):
+    global numPages
+    numPages += 2
     output.write("\\begin{tikzpicture}[\n"
             + "\tinner sep=3 pt,\n"
             + "\ttitle/.style={%\n"
@@ -304,6 +321,8 @@ def print_week(output, currDate):
             + "\\end{tikzpicture}\n")
 
 def print_day(output, currDate):
+    global numPages
+    numPages += 2
     output.write("\\begin{tikzpicture}[\n"
             + "\tinner sep=3 pt,\n"
             + "\ttitle/.style={%\n"
@@ -409,3 +428,36 @@ def print_day(output, currDate):
             + "\t}\n"
             + "\t\n"
             + "\\end{tikzpicture}\n")
+
+def print_endpages(output, minEndpages, signatureLen):
+    global numPages
+    endpageCount = 0
+    while endpageCount < minEndpages or numPages % signatureLen != 0:
+        endpageCount += 1
+        numPages += 1
+        output.write("\t\\begin{tikzpicture}[\n"
+                + "\t\tinner sep=3 pt,\n"
+                + "\t\ttitle/.style={%\n"
+                + "\t\t\tnode font=\\normalsize,\n"
+                + "\t\t},\n"
+                + "\t\tday/.style={%\n"
+                + "\t\t\tanchor=west,\n"
+                + "\t\t\tnode font=\\footnotesize, \n"
+                + "\t\t},\n"
+                + "\t\tdate/.style={%\n"
+                + "\t\t\tanchor = east,\n"
+                + "\t\t\tnode font=\\tiny, \n"
+                + "\t\t\tcolor=gray,\n"
+                + "\t\t},\n"
+                + "\t\tyscale = -1]\n"
+                + "\t\t% Framing Nodes\n"
+                + "\t\t\\node at (0,0) {};\n"
+                + "\t\t\\node at (8.5,11) {};\n"
+                + "\t\t\n"
+                + "\t\t% Minor Horizontal Lines\n"
+                + "\t\t\\foreach \i in {1, 1.5, ..., 10.5}{\n"
+                + "\t\t\t\\draw [gray, thin] (0.5, \i) -- (8, \i);\n"
+                + "\t\t}\n"
+                + "\t\t% Date / Title and Border Lines\n"
+                + "\t\t\\node at (0.5,0.5) [title] [anchor=north west] {Notes and Future Dates};\n"
+                + "\t\\end{tikzpicture}\n")

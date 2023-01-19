@@ -1,0 +1,158 @@
+
+%%% 4 Daily Pages
+
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\large,
+    },
+    hournumber/.style={%
+        anchor = west,
+        node font=\small, 
+    },
+    minutenumber/.style={%
+        anchor = west,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {}; % each unit is 1/2 an inch
+    
+    % Date / Title and Border Lines
+    \node at (0.4,0.47) [title] [anchor=north west] {{{day}}, {{month}} {{dayNum}}{{daySuffix}}, {{year}}};
+    \draw [thick] (0.5,1) -- (8,1);
+    \draw [thick] (0.5, 10.5) -- (8, 10.5);
+    \draw [thick] (0.5, 1) -- (0.5, 10.5);
+    \draw [thick] (8, 1) -- (8, 10.5);
+
+    % Hour Numbers
+    \foreach \i in {0, 1, ..., 11}{
+        \node [hournumber] at (0.45, \i*9.5/12 + 1.2) {\i};
+    }
+    
+    % Minute Numbers
+    \foreach \i in {0, 1, ..., 11}{
+        \node [minutenumber] at (0.5, \i*9.5/12 + 1.6) {:30};
+    }
+
+    % Vertical Lines
+    \draw (1,1) -- (1, 10.5);
+    \foreach \i in {1, 3.3333, ..., 8}{
+        \draw (\i, 1) -- (\i, 10.5);
+    }
+
+    % Minor Horizontal Lines
+    \foreach \i in {0.5, 1.5, ..., 11.5}{
+        \draw [gray, thin] (1, \i*9.5/12 + 1) -- (8, \i*9.5/12 + 1);
+    }
+
+    % Major Horizontal Lines
+    \foreach \i in {0, 1, ..., 11}{
+        \draw (0.5,\i*9.5/12 + 1) -- (8, \i*9.5/12 + 1);
+    }
+    
+\end{tikzpicture}
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\Large,
+    },
+    hournumber/.style={%
+        anchor=west,
+        node font=\small, 
+    },
+    minutenumber/.style={%
+        anchor = west,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {}; % each unit is 1/2 an inch
+    
+    % Date / Title and Border Lines
+    \draw [thick] (0.5,1) -- (8,1);
+    \draw [thick] (0.5, 10.5) -- (8, 10.5);
+    \draw [thick] (0.5, 1) -- (0.5, 10.5);
+    \draw [thick] (8, 1) -- (8, 10.5);
+
+    % Hour Numbers
+    \foreach \i [evaluate=\i as \n using int(\i+12)] in {0, 1, ..., 11}{
+        \node [hournumber] at (0.45, \i*9.5/12 + 1.2) {\n};
+    }
+    
+    % Minute Numbers
+    \foreach \i in {0, 1, ..., 11}{
+        \node [minutenumber] at (0.5, \i*9.5/12 + 1.6) {:30};
+    }
+
+    % Vertical Lines
+    \draw (1,1) -- (1, 10.5);
+    \foreach \i in {1, 3.3333, ..., 8}{
+        \draw (\i, 1) -- (\i, 10.5);
+    }
+
+    % Minor Horizontal Lines
+    \foreach \i in {0.5, 1.5, ..., 11.5}{
+        \draw [gray, thin] (1, \i*9.5/12 + 1) -- (8, \i*9.5/12 + 1);
+    }
+
+    % Major Horizontal Lines
+    \foreach \i in {0, 1, ..., 11}{
+        \draw (0.5,\i*9.5/12 + 1) -- (8, \i*9.5/12 + 1);
+    }
+    
+\end{tikzpicture}
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    day/.style={%
+        anchor=west,
+        node font=\footnotesize, 
+    },
+    date/.style={%
+        anchor = east,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {};
+    
+    % Minor Horizontal Lines
+    \foreach \i in {1, 1.5, ..., 10.5}{
+        \draw [gray, thin] (0.5, \i) -- (8, \i);
+    }
+    % Date / Title and Border Lines
+    \node at (0.5,0.5) [title] [anchor=north west] {{{day}}'s Notes};
+\end{tikzpicture}
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    day/.style={%
+        anchor=west,
+        node font=\footnotesize, 
+    },
+    date/.style={%
+        anchor = east,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {};
+    
+    % Minor Horizontal Lines
+    \foreach \i in {1, 1.5, ..., 10.5}{
+        \draw [gray, thin] (0.5, \i) -- (8, \i);
+    }
+\end{tikzpicture}

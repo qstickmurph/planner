@@ -1,0 +1,26 @@
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    day/.style={%
+        anchor=west,
+        node font=\footnotesize, 
+    },
+    date/.style={%
+        anchor = east,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {};
+    
+    % Minor Horizontal Lines
+    \foreach \i in {1, 1.5, ..., 10.5}{
+        \draw [gray, thin] (0.5, \i) -- (8, \i);
+    }
+    % Date / Title and Border Lines
+    \node at (0.5,0.5) [title] [anchor=north west] {Notes and Future Dates};
+\end{tikzpicture}

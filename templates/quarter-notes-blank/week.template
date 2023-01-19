@@ -1,0 +1,226 @@
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    subtitle/.style={%
+        anchor = north,
+        node font=\normalsize, 
+    },
+    day/.style={%
+        anchor = west,
+        node font=\small, 
+    },
+    habitdate/.style={%
+        anchor = north west,
+        node font = \scriptsize,
+    },
+    habit/.style={
+        anchor = north west,
+        node font = \scriptsize,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {}; % each unit is 1/2 inch
+    
+    % ToDo list lines
+    \foreach \i in {1.5, 2, ..., 5}{
+        \draw [gray, thin] (1, \i) -- (4, \i);
+        \draw [gray, thin] (4.75, \i) -- (7.75, \i);
+    }
+    % Check Boxes
+    \foreach \i in {1, 1.5, ..., 5}{
+        \draw (0.6,\i+.1) rectangle (0.9,\i+0.4);
+        \draw (4.35,\i+.1) rectangle (4.65,\i+0.4);
+    }
+    
+    % Meal Plan Separator
+    \draw [thick] (0.5, 5.5) -- (8, 5.5);
+
+    % Meal Plan Day Lines
+    \foreach \i in {6, 6.642857143, ..., 10.5}{
+        \draw (0.5, \i) -- (4.25, \i);
+    }
+    \node [subtitle] at (2.3, 5.5) {Meal Plan};
+    \node [day] at (0.5, 6.321428571) {M:};
+    \node [day] at (0.5, 6.964285714) {T:};
+    \node [day] at (0.45, 7.607142857) {W:};
+    \node [day] at (0.5, 8.25) {R:};
+    \node [day] at (0.5, 8.892857143) {F:};
+    \node [day] at (0.5, 9.535714286) {S:};
+    \node [day] at (0.5, 10.178571429) {S:};
+    
+    % Habits Section
+    % Vertical
+    \foreach \i in {6, 6.25, ..., 8}{
+        \draw  [gray, thin] (\i, 5.5) -- (\i, 10.5);
+    }
+    \draw (6, 5.5) -- (6, 10.5);
+    
+    % Horizontal
+    \foreach \i in {6, 6.321428571, ..., 10.5}{
+        \draw (4.25, \i) -- (8, \i);
+    }
+    \draw [thick] (4.25, 6) -- (8,6);
+
+    % Text
+    \node [anchor=north west] at (4.25, 5.5) {Habits};
+    \node [habitdate] at (5.88, 5.55) {M};
+    \node [habitdate] at (6.16, 5.55) {T};
+    \node [habitdate] at (6.37, 5.55) {W};
+    \node [habitdate] at (6.66, 5.55) {R};
+    \node [habitdate] at (6.92, 5.55) {F};
+    \node [habitdate] at (7.18, 5.55) {S};
+    \node [habitdate] at (7.43, 5.55) {S};
+    \node [habitdate] at (7.64, 5.51) {\#};
+    
+    % Vertical Split
+    \draw [thick] (4.25,1) -- (4.25, 10.5);
+
+    % Date / Title and Border Lines
+    \node at (0.4,0.5) [title] [anchor=north west] { Week of };
+    \draw [thick] (0.5,1) -- (8,1);
+    \draw [thick] (0.5, 10.5) -- (8, 10.5);
+    \draw [thick] (0.5, 1) -- (0.5, 10.5);
+    \draw [thick] (8, 1) -- (8, 10.5);
+    
+\end{tikzpicture}
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    day/.style={%
+        anchor=west,
+        node font=\footnotesize, 
+    },
+    date/.style={%
+        anchor = east,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {};
+    
+    % Minor Horizontal Lines
+    \foreach \i in {1.5, 2, ..., 10.5}{
+        \draw [gray, thin] (0.75, \i) -- (4, \i);
+        \draw [gray, thin] (4.5, \i) -- (7.75, \i);
+    }
+    
+    % Date / Title and Border Lines
+    \node at (0.5,0.4) [title] [anchor=north west] {Events, Appointments, and Due Dates};
+    \draw [thick] (0.5,1) -- (8,1);
+    \draw [thick] (0.5, 10.5) -- (8, 10.5);
+    \draw [thick] (0.5, 1) -- (0.5, 10.5);
+    \draw [thick] (8, 1) -- (8, 10.5);
+
+    % Major Horizontal Lines
+    \draw (0.5, 1.5) -- (8, 1.5);
+    
+    % Days / Dates
+    \node [day] at (.65, 1.28) {Monday};
+    \node [day] at (4.35, 1.28) {Tuesday};
+    
+    % Vertical Lines
+    \foreach \i in {0.5, 4.25, ..., 8}{
+        \draw [thick] (\i, 1) -- (\i, 10.5);
+    }
+    
+\end{tikzpicture}
+    \begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    day/.style={%
+        anchor=west,
+        node font=\footnotesize, 
+    },
+    date/.style={%
+        anchor = east,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {};
+    
+    % Minor Horizontal Lines
+    \foreach \i in {1.5, 2, ..., 10.5}{
+        \draw [gray, thin] (0.75, \i) -- (4, \i);
+        \draw [gray, thin] (4.5, \i) -- (7.75, \i);
+    }
+    
+    % Date / Title and Border Lines
+    \node at (0.5,0.4) [title] [anchor=north west] {Events, Appointments, and Due Dates};
+    \draw [thick] (0.5,1) -- (8,1);
+    \draw [thick] (0.5, 10.5) -- (8, 10.5);
+    \draw [thick] (0.5, 1) -- (0.5, 10.5);
+    \draw [thick] (8, 1) -- (8, 10.5);
+
+    % Major Horizontal Lines
+    \draw (0.5, 1.5) -- (8, 1.5);
+    
+    % Days / Dates
+    \node [day] at (.65, 1.28) {Wednesday};
+    \node [day] at (4.35, 1.28) {Thursday};
+    
+    % Vertical Lines
+    \foreach \i in {0.5, 4.25, ..., 8}{
+        \draw [thick] (\i, 1) -- (\i, 10.5);
+    }
+    
+\end{tikzpicture}
+    \begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\normalsize,
+    },
+    day/.style={%
+        anchor=west,
+        node font=\footnotesize, 
+    },
+    date/.style={%
+        anchor = east,
+        node font=\tiny, 
+        color=gray,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5,11) {};
+    
+    % Minor Horizontal Lines
+    \foreach \i in {1.5, 2, ..., 10.5}{
+        \draw [gray, thin] (0.75, \i) -- (4, \i);
+        \draw [gray, thin] (4.5, \i) -- (7.75, \i);
+    }
+    
+    % Date / Title and Border Lines
+    \node at (0.5,0.4) [title] [anchor=north west] {Events, Appointments, and Due Dates};
+    \draw [thick] (0.5,1) -- (8,1);
+    \draw [thick] (0.5, 10.5) -- (8, 10.5);
+    \draw [thick] (0.5, 1) -- (0.5, 10.5);
+    \draw [thick] (8, 1) -- (8, 10.5);
+    \draw [thick] (4.25, 6) -- (8, 6);
+
+    % Major Horizontal Lines
+    \draw (0.5, 1.5) -- (8, 1.5);
+    \draw (4.25, 6.5) -- (8, 6.5);
+    
+    % Days / Dates
+    \node [day] at (.65, 1.28) {Friday};
+    \node [day] at (4.35, 1.28) {Saturday};
+    \node [day] at (4.35, 6.28) {Sunday};
+    
+    % Vertical Lines
+    \foreach \i in {0.5, 4.25, ..., 8}{
+        \draw [thick] (\i, 1) -- (\i, 10.5);
+    }
+    
+\end{tikzpicture}

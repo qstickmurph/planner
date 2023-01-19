@@ -1,0 +1,8 @@
+
+%%% Blank page
+
+\begin{tikzpicture}
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5, 11) {};
+\end{tikzpicture}

@@ -1,0 +1,60 @@
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        anchor = south,
+        node font=\Huge,
+        align=center,
+    },
+    subtitle/.style={%
+        anchor = south,
+        node font=\huge,
+        align=center,
+    },
+    contactinfo/.style={%
+        anchor = north west,
+        node font=\normalsize,
+        align=left,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5, 11) {};
+    
+    % Title and Subtitle
+    \node at (4.25,4) [title] {{{title}}};
+    \node at (4.25, 5) [subtitle] {{{subtitle}}};
+    
+    % Contact Info
+    \draw (1.25,6) rectangle (7.25,8.5);
+    \foreach \i in {6.5, 7, ..., 8}{
+        \draw [thin, gray] (1.25, \i) -- (7.25, \i);
+    }
+    
+    \node at (1.5, 6) [contactinfo] {{{ownerName}}};
+    \node at (1.5, 6.5) [contactinfo] {{{phoneNumber}}};
+    \node at (1.5, 7) [contactinfo] {{{address1}}};
+    \node at (1.5, 7.5) [contactinfo] {{{address2}}};
+    \node at (1.5, 8) [contactinfo] {{{city}}, {{state}} {{zipCode}} {{country}}};
+    
+\end{tikzpicture}
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\Large,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5, 11) {};
+\end{tikzpicture}
+\begin{tikzpicture}[
+    inner sep=3 pt,
+    title/.style={%
+        node font=\Large,
+    },
+    yscale = -1]
+    % Framing Nodes
+    \node at (0,0) {};
+    \node at (8.5, 11) {};
+    
+\end{tikzpicture}
